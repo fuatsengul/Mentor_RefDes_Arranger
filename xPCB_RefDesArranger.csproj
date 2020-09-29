@@ -35,7 +35,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -71,7 +71,7 @@
   <ItemGroup>
     <COMReference Include="MGCPCB">
       <Guid>{EDEDED00-D5F6-4B04-8FE7-EDEDEDEDED00}</Guid>
-      <VersionMajor>65</VersionMajor>
+      <VersionMajor>91</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -89,7 +89,7 @@
     </COMReference>
     <COMReference Include="MGCSDDOUTPUTWINDOWLib">
       <Guid>{AE2540BA-62DB-4656-B6E8-D46AA8FC4A6C}</Guid>
-      <VersionMajor>65</VersionMajor>
+      <VersionMajor>91</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -101,6 +101,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release "C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.exe" sign /t "http://timestamp.comodoca.com/authenticode" "$(TargetDir)xPCB_RefDesArranger.exe"
+</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

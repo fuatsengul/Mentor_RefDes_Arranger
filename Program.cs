@@ -31,12 +31,10 @@ namespace xPCB_RefDesArranger
             #region Instance Connection Code
             try
             {
-                MGCPCBReleaseEnvironmentLib.IMGCPCBReleaseEnvServer _server =
-                    (MGCPCBReleaseEnvironmentLib.IMGCPCBReleaseEnvServer)Activator.CreateInstance(
-                        Marshal.GetTypeFromCLSID(
+                var clsid = Marshal.GetTypeFromCLSID(
                             new Guid("44983CB8-19B0-4695-937A-6FF0B74ECFC5")
-                        )
-                    );
+                        );
+                dynamic _server = Activator.CreateInstance(clsid);
 
 
                 _server.SetEnvironment("");

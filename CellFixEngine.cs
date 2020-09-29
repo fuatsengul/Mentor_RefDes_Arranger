@@ -22,32 +22,32 @@ namespace xPCB_RefDesArranger
             List<Point> Points = new List<Point>();
             #region Point Motor Function
 
-            foreach ( FabricationLayerGfx gfx in _cellDoc.get_FabricationLayerGfxs(EPcbFabricationType.epcbFabSilkscreen) )
-            {
-                if ( !gfx.Geometry.Filled )
-                {
-                    gfx.Geometry.set_LineDisplayWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
-                    gfx.Geometry.set_LineWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
-                }
-            }
+            //foreach ( FabricationLayerGfx gfx in _cellDoc.get_FabricationLayerGfxs(EPcbFabricationType.epcbFabSilkscreen) )
+            //{
+            //    if ( !gfx.Geometry.Filled )
+            //    {
+            //        gfx.Geometry.set_LineDisplayWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
+            //        gfx.Geometry.set_LineWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
+            //    }
+            //}
 
-            foreach ( FabricationLayerText _txt in _cellDoc.get_FabricationLayerTexts(EPcbFabricationType.epcbFabSilkscreen) )
-            {
-                //Console.WriteLine(_txt.TextString);
-                if ( _txt.TextString == _cellDoc.RefDes )
-                {
-                    //_txt.Format.set_Height(EPcbUnit.epcbUnitMils, SilkScreenRefDesHeight);
-                    //_txt.Format.set_PenWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
-                    _txt.Format.Font = "VeriBest Gerber 0";
-                    _txt.Format.set_PenWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
-                    _txt.Format.AspectRatio = 1;
-                }
-            }
+            //foreach ( FabricationLayerText _txt in _cellDoc.get_FabricationLayerTexts(EPcbFabricationType.epcbFabSilkscreen) )
+            //{
+            //    //Console.WriteLine(_txt.TextString);
+            //    if ( _txt.TextString == _cellDoc.RefDes )
+            //    {
+            //        //_txt.Format.set_Height(EPcbUnit.epcbUnitMils, SilkScreenRefDesHeight);
+            //        //_txt.Format.set_PenWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
+            //        _txt.Format.Font = "VeriBest Gerber 0";
+            //        _txt.Format.set_PenWidth(EPcbUnit.epcbUnitMils, SilkScreenLineWidth);
+            //        _txt.Format.AspectRatio = 1;
+            //    }
+            //}
 
             double orientation = _cellDoc.get_Orientation(EPcbAngleUnit.epcbAngleUnitDegrees);
             //bool orientationChanged = false;
 
-            _cellDoc.PlacementOutlines[1].Geometry.set_LineDisplayWidth(EPcbUnit.epcbUnitCurrent, 0);
+            _cellDoc.PlacementOutlines[1].Geometry.set_LineDisplayWidth(EPcbUnit.epcbUnitMils, 0);
             
 
             if ( orientation % 90 != 0 )
@@ -198,13 +198,13 @@ namespace xPCB_RefDesArranger
                     if ( text.TextString == _cellDoc.RefDes )
                     {
                         
-                        text.set_PositionX(EPcbUnit.epcbUnitCurrent, centerpointX);
-                        text.set_PositionY(EPcbUnit.epcbUnitCurrent, centerpointY);
+                        text.set_PositionX(EPcbUnit.epcbUnitMils, centerpointX);
+                        text.set_PositionY(EPcbUnit.epcbUnitMils, centerpointY);
                         if ( _90deg )
                             text.Format.set_Orientation(EPcbAngleUnit.epcbAngleUnitDegrees, 90);
                         else
                             text.Format.set_Orientation(EPcbAngleUnit.epcbAngleUnitDegrees, 0);
-                        text.Format.set_Height(EPcbUnit.epcbUnitCurrent, text_height);
+                        text.Format.set_Height(EPcbUnit.epcbUnitMils, text_height);
                         text.Format.HorizontalJust = EPcbHorizontalJustification.epcbJustifyHCenter;
                         text.Format.VerticalJust = EPcbVerticalJustification.epcbJustifyVCenter;
                         try
@@ -220,7 +220,7 @@ namespace xPCB_RefDesArranger
                                     }
                                     else
                                     {
-                                        text.Format.set_Height(EPcbUnit.epcbUnitCurrent, text_height);
+                                        text.Format.set_Height(EPcbUnit.epcbUnitMils, text_height);
                                         break;
                                     }
                                 }
@@ -236,7 +236,7 @@ namespace xPCB_RefDesArranger
                                     }
                                     else
                                     {
-                                        text.Format.set_Height(EPcbUnit.epcbUnitCurrent, text_height);
+                                        text.Format.set_Height(EPcbUnit.epcbUnitMils, text_height);
                                         break;
                                     }
                                 }
@@ -299,24 +299,24 @@ namespace xPCB_RefDesArranger
         {
             if ( _geom.IsRect() )
             {
-                double stepX = ( _geom.get_RectMaxX() - _geom.get_RectMinX() ) / 25;
-                for ( double x = _geom.get_RectMinX();x <= _geom.get_RectMaxX();x = x + stepX )
+                double stepX = ( _geom.get_RectMaxX(EPcbUnit.epcbUnitMils) - _geom.get_RectMinX(EPcbUnit.epcbUnitMils) ) / 25;
+                for ( double x = _geom.get_RectMinX(EPcbUnit.epcbUnitMils); x <= _geom.get_RectMaxX(EPcbUnit.epcbUnitMils);x = x + stepX )
                 {
-                    Points.Add(new Point(Convert.ToInt16(x), Convert.ToInt16(_geom.get_RectMaxY())));
-                    Points.Add(new Point(Convert.ToInt16(x), Convert.ToInt16(_geom.get_RectMinY())));
+                    Points.Add(new Point(Convert.ToInt16(x), Convert.ToInt16(_geom.get_RectMaxY(EPcbUnit.epcbUnitMils))));
+                    Points.Add(new Point(Convert.ToInt16(x), Convert.ToInt16(_geom.get_RectMinY(EPcbUnit.epcbUnitMils))));
                 }
-                double stepY = ( _geom.get_RectMaxY() - _geom.get_RectMinY() ) / 25;
-                for ( double y = _geom.get_RectMinY();y <= _geom.get_RectMaxY();y = y + stepY )
+                double stepY = ( _geom.get_RectMaxY(EPcbUnit.epcbUnitMils) - _geom.get_RectMinY(EPcbUnit.epcbUnitMils) ) / 25;
+                for ( double y = _geom.get_RectMinY(EPcbUnit.epcbUnitMils);y <= _geom.get_RectMaxY(EPcbUnit.epcbUnitMils);y = y + stepY )
                 {
-                    Points.Add(new Point(Convert.ToInt16(_geom.get_RectMaxX()), Convert.ToInt16(y)));
-                    Points.Add(new Point(Convert.ToInt16(_geom.get_RectMinX()), Convert.ToInt16(y)));
+                    Points.Add(new Point(Convert.ToInt16(_geom.get_RectMaxX(EPcbUnit.epcbUnitMils)), Convert.ToInt16(y)));
+                    Points.Add(new Point(Convert.ToInt16(_geom.get_RectMinX(EPcbUnit.epcbUnitMils)), Convert.ToInt16(y)));
                 }
             }
             else if ( _geom.IsCircle() )
             {
-                double circx = _geom.get_CircleX();
-                double circy = _geom.get_CircleY();
-                double circR = _geom.get_CircleR();
+                double circx = _geom.get_CircleX(EPcbUnit.epcbUnitMils);
+                double circy = _geom.get_CircleY(EPcbUnit.epcbUnitMils);
+                double circR = _geom.get_CircleR(EPcbUnit.epcbUnitMils);
                 for ( double pi = 0;pi < 2 * Math.PI;pi = pi + 0.1 )
                 {
                     Points.Add(new Point(Convert.ToInt16(circx + ( circR * Math.Sin(pi) )), Convert.ToInt16(circy + ( circR * Math.Cos(pi) ))));
@@ -324,7 +324,7 @@ namespace xPCB_RefDesArranger
             }
             else if ( _geom.IsArced() )
             {
-                object[,] outlinepoints = (object[,])_geom.get_PointsArray();
+                object[,] outlinepoints = (object[,])_geom.get_PointsArray(EPcbUnit.epcbUnitMils);
                 string x = string.Empty;
                 if ( outlinepoints.GetLength(1) == 3 )
                 {
@@ -424,7 +424,7 @@ namespace xPCB_RefDesArranger
             else //if ( _geom.IsPath() || _geom.IsArced() )
             {
 
-                object[,] outlinepoints = (object[,])_geom.get_PointsArray();
+                object[,] outlinepoints = (object[,])_geom.get_PointsArray(EPcbUnit.epcbUnitMils);
 
 
                 for ( int i = 0;i < outlinepoints.GetLength(1) - 1;i++ )
