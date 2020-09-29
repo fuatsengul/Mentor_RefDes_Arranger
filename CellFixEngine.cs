@@ -295,49 +295,6 @@ namespace xPCB_RefDesArranger
             }
         }
 
-        public void RemoveUserLayerGFXs( ref MGCPCB.Document _cellDoc, string _userLayerName )
-        {
-            foreach ( UserLayerGfx _gfx in _cellDoc.get_UserLayerGfxs() )
-            {
-                if ( _gfx.UserLayer.Name == _userLayerName )
-                {
-                    _gfx.Delete();
-                }
-            }
-        }
-
-        public void CopyUserLayerTexttoAssembly( ref MGCPCB.Document _cellDoc, string _userLayerName )
-        {
-            foreach ( UserLayerText _text in _cellDoc.get_UserLayerTexts() )
-            {
-                if ( _text.UserLayer.Name == _userLayerName )
-                {
-                    _text.Format.set_PenWidth(EPcbUnit.epcbUnitMils, 2);
-
-                    if ( _text.TextString == "Ref Des" )
-                    {
-                        _cellDoc.PutFabricationLayerTextEx("Ref Des", _text.PositionX, _text.PositionY, EPcbTextType.epcbTextRefDes, EPcbFabricationType.epcbFabAssembly, EPcbSide.epcbSideMount, null, EPcbUnit.epcbUnitMils);
-                    }
-                    else
-                    {
-                        _cellDoc.PutFabricationLayerText(_text.TextString, _text.PositionX, _text.PositionY, EPcbFabricationType.epcbFabAssembly, EPcbSide.epcbSideMount, 25, 0, 2, "VeriBest Gerber 0", (EPcbTextAttr)0, _text.Format.HorizontalJust, _text.Format.VerticalJust, null, EPcbUnit.epcbUnitMils);
-                    }
-
-                }
-            }
-        }
-
-        public void RemoveUserLayerTexts( ref MGCPCB.Document _cellDoc, string _userLayerName )
-        {
-            foreach ( UserLayerText _text in _cellDoc.get_UserLayerTexts() )
-            {
-                if ( _text.UserLayer.Name == _userLayerName )
-                {
-                    _text.Delete();
-                }
-            }
-        }
-
         public List<Point> ProcessGFX( Geometry _geom, List<Point> Points )
         {
             if ( _geom.IsRect() )

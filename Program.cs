@@ -15,9 +15,9 @@ namespace xPCB_RefDesArranger
     class Program
     {
         static MGCPCB.Document pcbDoc;
-        static MGCPCB.UserLayer FindOrAddLayer(string LayerName, MGCPCB.Document _doc)
+        static dynamic FindOrAddLayer(string LayerName, dynamic _doc)
         {
-            UserLayer _lay = _doc.FindUserLayer(LayerName);
+            dynamic _lay = _doc.FindUserLayer(LayerName);
             if (_lay == null)
             {
                 _lay = _doc.SetupParameter.PutUserLayer(LayerName);
@@ -48,19 +48,24 @@ namespace xPCB_RefDesArranger
                 string progID = _server.ProgIDVersion;
 
                 object[,] _releases = (object[,])_server.GetInstalledReleases();
-                MGCPCB.Application pcbApp = null;
+                dynamic pcbApp = null;
 
                 for (int i = 1; i < _releases.Length / 4; i++)
                 {
                     string _com_version = Convert.ToString(_releases[i, 0]);
                     try
                     {
-                        pcbApp = (MGCPCB.Application)Interaction.GetObject(null, "MGCPCB.Application." + _com_version);
+                        pcbApp = Interaction.GetObject(null, "MGCPCB.Application." + _com_version);
+
+                        pcbDoc = pcbApp.ActiveDocument;
+                        dynamic licApp = Interaction.CreateObject("MGCPCBAutomationLicensing.Application." + _com_version);
+                        int _token = licApp.GetToken(pcbDoc.Validate(0));
+                        pcbDoc.Validate(_token);
+
                         break;
                     }
-                    catch
+                    catch (Exception m)
                     {
-
                     }
                 }
 
@@ -71,10 +76,7 @@ namespace xPCB_RefDesArranger
                     System.Environment.Exit(1);
                 }
 
-                pcbDoc = pcbApp.ActiveDocument;
-                MGCPCBAutomationLicensing.Application licApp = new MGCPCBAutomationLicensing.Application();
-                int _token = licApp.GetToken(pcbDoc.Validate(0));
-                pcbDoc.Validate(_token);
+                
 
             }
             catch (Exception m)
@@ -164,7 +166,7 @@ namespace xPCB_RefDesArranger
             {
                 pcbDoc.TransactionEnd();
                 pcbDoc.Application.Gui.ProgressBar(100);
-                pcbDoc.Application.Gui.ProgressBarInitialize(true, "Ref-Des Arranger: Completed", 100, 0);
+                pcbDoc.Application.Gui.ProgressBarInitialize(false, "Ref-Des Arranger: Completed");
                 addHtml("<p style=\"{color: #006600; font-weight: bold;}\">Operation Competed</p>");
                 addText("");
                 addHtml("<p style=\"{color: red; font-weight: bold;}\">Copyright 2008-2020; Milbitt Engineering. All rights reserved.<br />" +

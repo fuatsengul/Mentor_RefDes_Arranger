@@ -71,16 +71,7 @@
   <ItemGroup>
     <COMReference Include="MGCPCB">
       <Guid>{EDEDED00-D5F6-4B04-8FE7-EDEDEDEDED00}</Guid>
-      <VersionMajor>91</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>tlbimp</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="MGCPCBAutomationLicensing">
-      <Guid>{C6369FF8-07F3-45A7-9E65-28476752E83B}</Guid>
-      <VersionMajor>91</VersionMajor>
+      <VersionMajor>65</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
@@ -98,7 +89,7 @@
     </COMReference>
     <COMReference Include="MGCSDDOUTPUTWINDOWLib">
       <Guid>{AE2540BA-62DB-4656-B6E8-D46AA8FC4A6C}</Guid>
-      <VersionMajor>91</VersionMajor>
+      <VersionMajor>65</VersionMajor>
       <VersionMinor>0</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
